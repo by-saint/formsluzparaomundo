@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal da Comunidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-black text-white font-sans overflow-hidden relative selection:bg-white/30">
+
+    <div class="background-gradient"></div>
+    
+    <div class="fixed top-0 left-0 w-full h-1 bg-white/10 z-40">
+        <div id="progress-bar" class="h-full bg-white transition-all duration-500 ease-in-out" style="width: 0%"></div>
+    </div>
+
+    <div id="spotlight" class="fixed inset-0 z-50 bg-white pointer-events-none opacity-0" style="clip-path: circle(150% at 50% 50%); transition: opacity 0.5s ease, clip-path 1.5s cubic-bezier(0.7, 0, 0.3, 1);"></div>
+    
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center"></div>
+
+    <div id="form-container" class="min-h-screen flex flex-col transition-opacity duration-500">
+        <div class="flex-grow flex items-center justify-center p-6 md:p-12">
+            <div class="w-full max-w-2xl relative mx-auto"> 
+
+                <button id="btn-back" class="hidden absolute -top-16 left-0 flex items-center text-white/50 hover:text-white transition-colors opacity-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    <span class="ml-1 font-mono text-sm tracking-widest uppercase">VOLTAR</span>
+                </button>
+
+                <section class="step-screen" data-step="1">
+                    <div class="mb-12">
+                        <span class="text-white/50 font-mono text-sm tracking-[0.2em] uppercase mb-4 block">IDENTIFICAÇÃO // 01</span>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter leading-none">Qual é a sua faixa etária?</h2>
+                    </div>
+                    <div>
+                        <button class="radio-option" data-value="menos-13" data-next="2">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                            <span class="radio-label">&lt; 13 anos</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="13-15" data-next="2">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                            <span class="radio-label">13 - 15 anos</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="15-17" data-next="2">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                            <span class="radio-label">15 - 17 anos</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="17-20" data-next="2">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                            <span class="radio-label">17 - 20 anos</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="mais-20" data-next="2">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                            <span class="radio-label">20+ anos</span>
+                            <div class="radio-check"></div>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="step-screen hidden" data-step="2">
+                    <div class="mb-12">
+                        <span class="text-white/50 font-mono text-sm tracking-[0.2em] uppercase mb-4 block">STATUS // 02</span>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter leading-none">Qual a sua situação atual?</h2>
+                    </div>
+                    <div>
+                        <button class="radio-option" data-value="estudante" data-next="3">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                            <span class="radio-label">Estudante</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="jovem-aprendiz" data-next="3">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                            <span class="radio-label">Aprendiz / Estágio</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="clt" data-next="3">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                            <span class="radio-label">Trabalho (CLT)</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="autonomo" data-next="3">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                            <span class="radio-label">Autónomo / Founder</span>
+                            <div class="radio-check"></div>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="step-screen hidden" data-step="3">
+                    <div class="mb-12">
+                        <span class="text-white/50 font-mono text-sm tracking-[0.2em] uppercase mb-4 block">MUDANÇA // 03</span>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter leading-none">O que você precisa mudar hoje em sua vida?</h2>
+                    </div>
+                    <div class="relative group">
+                        <textarea id="input-desafio" rows="4" placeholder="Descreva sua necessidade..." class="w-full p-6 text-3xl bg-transparent border-b-2 border-white/20 focus:border-white text-white placeholder-white/20 focus:outline-none transition-all resize-none leading-relaxed font-light"></textarea>
+                        <div class="absolute bottom-4 right-4 text-xs text-white/30 font-mono tracking-wider">[ENTER] ↵</div>
+                    </div>
+                    <div class="mt-16 flex justify-end">
+                        <button id="btn-next-desafio" class="btn-next" disabled>
+                            CONTINUAR <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="step-screen hidden" data-step="4">
+                    <div class="mb-12">
+                        <span class="text-white/50 font-mono text-sm tracking-[0.2em] uppercase mb-4 block">DISPOSIÇÃO // 04</span>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter leading-none">O quanto você está disposto a mudar isso?</h2>
+                    </div>
+                    <div>
+                        <button class="radio-option" data-value="disposto-muitas-coisas" data-submit="true">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                            <span class="radio-label">Estou disposto a fazer muitas coisas</span>
+                            <div class="radio-check"></div>
+                        </button>
+                        <button class="radio-option" data-value="nao-posso-muita-coisa" data-submit="true">
+                            <div class="radio-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                            <span class="radio-label">Ainda não posso fazer muita coisa</span>
+                            <div class="radio-check"></div>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="result-container" class="hidden fixed inset-0 z-30 flex items-center justify-center p-6 w-full h-full">
+        
+        <section id="result-vip_networking" class="result-screen hidden w-full flex justify-center">
+            <div class="mx-auto max-w-md w-full p-10 rounded-3xl border bg-gradient-to-br from-slate-800 to-black border-slate-400/40 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
+                <div class="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                <div class="w-24 h-24 mx-auto mb-8 rounded-2xl flex items-center justify-center bg-slate-300 text-black"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                
+                <h1 class="text-5xl font-black mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">BEM-VINDO</h1>
+                <p class="text-xl text-white/70 mb-10 leading-relaxed">A sua jornada começa agora. Junte-se à comunidade e comece a evoluir.</p>
+                
+                <a href="https://chat.whatsapp.com/JqCpc9PhD2l4RGnjozsrod" target="_blank" class="result-button bg-slate-300 hover:bg-white text-black shadow-white/10">ENTRAR NO PORTAL</a>
+            </div>
+        </section>
+        
+        <section id="result-geral" class="result-screen hidden w-full flex justify-center">
+            <div class="mx-auto max-w-md w-full p-10 rounded-3xl border bg-gradient-to-br from-blue-900/40 to-black border-blue-500/40 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
+                <div class="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                <div class="w-24 h-24 mx-auto mb-8 rounded-2xl flex items-center justify-center bg-blue-600 text-white"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                
+                <h1 class="text-5xl font-black mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">BEM-VINDO</h1>
+                <p class="text-xl text-white/70 mb-10 leading-relaxed">A sua jornada começa agora. Junte-se à comunidade e comece a evoluir.</p>
+                
+                <a href="https://chat.whatsapp.com/FS5QTeOxRgXCm1kkorCV6P" target="_blank" class="result-button bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20">ENTRAR NO PORTAL</a>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
