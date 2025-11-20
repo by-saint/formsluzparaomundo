@@ -1,0 +1,193 @@
+/* Fundo */
+.background-gradient {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(20,20,40,0.8) 0%, rgba(0,0,0,1) 100%);
+    z-index: -10;
+}
+
+/* --- ESTILOS DAS TELAS --- */
+.step-screen, .result-screen {
+    width: 100%;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.hidden {
+    display: none;
+}
+.animate-fade-in {
+    animation: fade-in 0.5s ease forwards;
+}
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Animações de Transição de Passo */
+.step-enter {
+    animation: step-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.step-exit {
+    animation: step-out 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.step-enter-reverse {
+    animation: step-in-reverse 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.step-exit-reverse {
+    animation: step-out-reverse 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes step-in {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes step-out {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-50px); }
+}
+@keyframes step-in-reverse {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes step-out-reverse {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(50px); }
+}
+
+
+/* --- ESTILOS DOS BOTÕES DE OPÇÃO (AS "CAIXAS") --- */
+.radio-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1.25rem; /* 20px */
+    margin-bottom: 1rem; /* 16px */
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem; /* 16px */
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #a3a3a3; /* neutral-400 */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+}
+.radio-option:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.radio-option.selected {
+    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.radio-icon {
+    padding: 0.75rem; /* 12px */
+    border-radius: 0.75rem; /* 12px */
+    margin-right: 1.25rem; /* 20px */
+    z-index: 10;
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #737373; /* neutral-500 */
+}
+.radio-option.selected .radio-icon {
+    background-color: #fff;
+    color: #000;
+}
+
+.radio-label {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 500;
+    flex-grow: 1;
+    letter-spacing: -0.025em; /* tracking-tight */
+    z-index: 10;
+    position: relative;
+}
+
+.radio-check {
+    width: 1.75rem; /* 28px */
+    height: 1.75rem; /* 28px */
+    border-radius: 9999px; /* rounded-full */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+    position: relative;
+    transition: all 0.3s ease;
+}
+.radio-option.selected .radio-check {
+    border-color: #fff;
+    background-color: #fff;
+}
+
+/* --- ESTILOS DE OUTROS INPUTS --- */
+.btn-next {
+    position: relative;
+    padding: 1rem 2rem; /* py-4 px-8 */
+    background-color: #fff;
+    color: #000;
+    border-radius: 9999px; /* rounded-full */
+    font-weight: 700; /* bold */
+    font-size: 1.125rem; /* text-lg */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.btn-next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.result-screen {
+    width: 100%;
+}
+.result-button {
+    display: block;
+    width: 100%;
+    padding: 1.25rem 0; /* py-5 */
+    border-radius: 0.75rem; /* rounded-xl */
+    font-weight: 700; /* bold */
+    font-size: 1.125rem; /* text-lg */
+    letter-spacing: 0.1em; /* tracking-widest */
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    transform: perspective(1px) translateZ(0); /* Aceleração de hardware */
+}
+.result-button:hover {
+    transform: scale(1.02);
+}
+.result-button:active {
+    transform: scale(0.98);
+}
+
+
+/* --- ANIMAÇÕES FINAIS --- */
+@keyframes particleExplosion {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+}
+.particle.animating {
+    animation: particleExplosion 1s ease-out forwards;
+}
+
+@keyframes glitch-anim {
+    0% { clip-path: inset(50% 0 50% 0); transform: skew(0.3deg); }
+    20% { clip-path: inset(10% 0 60% 0); transform: skew(-0.3deg); }
+    40% { clip-path: inset(80% 0 5% 0); transform: skew(0.3deg); }
+    60% { clip-path: inset(20% 0 30% 0); transform: skew(-0.3deg); }
+    80% { clip-path: inset(60% 0 10% 0); transform: skew(0.3deg); }
+    100% { clip-path: inset(0 0 0 0); transform: skew(0); }
+}
+.glitch-enter {
+    animation: glitch-anim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
